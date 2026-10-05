@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر الأغذية</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: #198754;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        .search {
+            width: 90%;
+            max-width: 500px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1100px;
+            margin: 25px auto;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-bottom: 25px;
+        }
+
+        .category {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px 18px;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .category:hover {
+            background: #198754;
+            color: white;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .product .emoji {
+            font-size: 55px;
+        }
+
+        .product h3 {
+            margin: 10px 0;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #198754;
+            margin-bottom: 12px;
+        }
+
+        button {
+            background: #198754;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #146c43;
+        }
+
+        .cart {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #dc3545;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            margin-top: 50px;
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🛒 متجر الأغذية</h1>
+    <p>كل احتياجاتك في مكان واحد</p>
+
+    <input
+        class="search"
+        type="text"
+        placeholder="🔎 ابحث عن منتج..."
+        onkeyup="searchProducts()"
+        id="searchBox"
+    >
+</header>
+
+<div class="container">
+
+    <div class="categories">
+        <div class="category">الكل</div>
+        <div class="category">🥛 ألبان</div>
+        <div class="category">🧀 أجبان</div>
+        <div class="category">🥤 مشروبات</div>
+        <div class="category">🍫 حلويات</div>
+        <div class="category">🧹 منظفات</div>
+    </div>
+
+    <div class="products" id="products">
+
+        <div class="product">
+            <div class="emoji">🥛</div>
+            <h3>حليب</h3>
+            <div class="price">15,000 ل.س</div>
+            <button onclick="addToCart('حليب', 15000)">أضف للسلة</button>
+        </div>
+
+        <div class="product">
+            <div class="emoji">🧀</div>
+            <h3>جبنة</h3>
+            <div class="price">25,000 ل.س</div>
+            <button onclick="addToCart('جبنة', 25000)">أضف للسلة</button>
+        </div>
+<div class="product">
+            <div class="emoji">🫒</div>
+            <h3>زيتون</h3>
+            <div class="price">20,000 ل.س</div>
+            <button onclick="addToCart('زيتون', 20000)">أضف للسلة</button>
+        </div>
+
+        <div class="product">
+            <div class="emoji">🥤</div>
+            <h3>مشروب</h3>
+            <div class="price">10,000 ل.س</div>
+            <button onclick="addToCart('مشروب', 10000)">أضف للسلة</button>
+        </div>
+
+        <div class="product">
+            <div class="emoji">🍫</div>
+            <h3>شوكولا</h3>
+            <div class="price">18,000 ل.س</div>
+            <button onclick="addToCart('شوكولا', 18000)">أضف للسلة</button>
+        </div>
+
+        <div class="product">
+            <div class="emoji">🧴</div>
+            <h3>شامبو</h3>
+            <div class="price">30,000 ل.س</div>
+            <button onclick="addToCart('شامبو', 30000)">أضف للسلة</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="cart" id="cart">
+    🛒 السلة: 0
+</div>
+
+<footer>
+    متجر الأغذية © 2026
+</footer>
+
+<script>
+    let cartCount = 0;
+
+    function addToCart(product, price) {
+        cartCount++;
+        document.getElementById("cart").innerHTML =
+            "🛒 السلة: " + cartCount;
+    }
+
+    function searchProducts() {
+        let search =
+            document.getElementById("searchBox").value.toLowerCase();
+
+        let products =
+            document.querySelectorAll(".product");
+
+        products.forEach(function(product) {
+            let name =
+                product.querySelector("h3").textContent.toLowerCase();
+
+            if (name.includes(search)) {
+                product.style.display = "block";
+            } else {
+                product.style.display = "none";
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
